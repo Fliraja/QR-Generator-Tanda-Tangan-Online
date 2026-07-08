@@ -50,6 +50,13 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        if (! auth()->user()->is_active) {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'nip' => 'Akun ini sudah dinonaktifkan.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 
@@ -69,7 +76,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            'nip' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
