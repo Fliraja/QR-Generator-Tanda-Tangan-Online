@@ -88,3 +88,24 @@
 - UUID invalid → halaman "Kode Tidak Ditemukan"
 - Bisa diakses tanpa login (publik)
 - Data internal tidak bocor ke publik
+
+## Fase 4 — Admin CRUD Signer & Log Audit (2026-07-08)
+
+### Added
+- Controller `SignerController` (resource): index, create, store, edit, update, destroy (nonaktifkan)
+- Controller `AuditLogController::index()`: list + filter by signer name, NIP, date range
+- Routes: `/admin/signers` (resource), `/admin/logs` — semua di bawah middleware `auth` + `admin`
+- Views: `admin/signers/index.blade.php`, `create.blade.php`, `edit.blade.php`
+- View: `admin/logs/index.blade.php` with filter form + pagination
+- Factory `SignerFactory` + HasFactory trait on QrGeneration model
+- Feature test `AdminTest` (9 tests, all pass)
+
+### Security
+- Staff (bukan admin) akses `/admin/signers` atau `/admin/logs` → 403
+- Log audit tampilkan IP + NIP staf (khusus admin), tidak bocor ke publik (/verify)
+
+### Test Results (all pass) — 9 tests
+- Admin dapat list, create, edit, nonaktifkan signer
+- Staff cannot access admin routes (403)
+- Log: tampil data, filter by signer name works
+- Total custom tests: 23 (QrGeneration 8 + Verification 6 + Admin 9) — all pass

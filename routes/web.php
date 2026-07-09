@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\QrGenerationController;
+use App\Http\Controllers\SignerController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +22,8 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::resource('users', UserManagementController::class)->except(['show']);
+        Route::resource('signers', SignerController::class)->except(['show']);
+        Route::get('/logs', [AuditLogController::class, 'index'])->name('logs.index');
     });
 });
 
