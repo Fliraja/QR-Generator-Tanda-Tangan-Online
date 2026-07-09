@@ -44,3 +44,27 @@
 
 ### Changed
 - Branch: `fase-1-auth-role`
+
+## Fase 2 — Core Generate & Download QR (2026-07-08)
+
+### Added
+- Controller `QrGenerationController`: `create()` (form), `store()` (generate + download PNG)
+- Route `GET /` (auth) → qr.create, named `qr.create`
+- Route `POST /qr/generate` (auth) → qr.generate
+- View `resources/views/qr/create.blade.php` with dropdown, optional letter number
+- SignerFactory + HasFactory trait on Signer model
+- `SignerFactory` for test data generation
+- Feature test `QrGenerationTest` (8 tests, all pass)
+
+### Modified
+- Routes `web.php`: `/` inside auth group points to QrGenerationController
+- `AuthenticatedSessionController::store()`: redirect to `route('qr.create')` instead of dashboard
+
+### Test Results (all pass)
+- Guest → redirect to login
+- Form shows only active signers
+- Generate returns PNG with correct headers
+- Validasi: signer required, inactive signer rejected
+- Letter number saved to DB
+- Without auth redirects to login
+- Multiple generations have unique UUIDs (no collision)
