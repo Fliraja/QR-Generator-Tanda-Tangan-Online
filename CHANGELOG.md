@@ -68,3 +68,23 @@
 - Letter number saved to DB
 - Without auth redirects to login
 - Multiple generations have unique UUIDs (no collision)
+
+## Fase 3 — Halaman Verifikasi Publik (2026-07-08)
+
+### Added
+- Controller `VerificationController::show()`: cari by uuid, return view
+- Route `GET /verify/{uuid}` publik (di luar auth middleware)
+- View `verify/show.blade.php`: tampilkan nama, jabatan, nomor surat (opsional), waktu generate
+- View `verify/not-found.blade.php`: pesan "Kode Tidak Ditemukan"
+- Factory `QrGenerationFactory` + HasFactory trait on QrGeneration model
+- Feature test `VerificationTest` (6 tests, all pass)
+
+### Security
+- Halaman publik tidak menampilkan `generated_by` atau `ip_address` (data internal tetap privat)
+
+### Test Results (all pass)
+- Valid UUID → tampil nama + jabatan signer
+- Nomor surat tampil jika diisi, tidak tampil jika null
+- UUID invalid → halaman "Kode Tidak Ditemukan"
+- Bisa diakses tanpa login (publik)
+- Data internal tidak bocor ke publik

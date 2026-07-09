@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrGenerationController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', function () {
@@ -21,5 +22,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('users', UserManagementController::class)->except(['show']);
     });
 });
+
+Route::get('/verify/{uuid}', [VerificationController::class, 'show'])->name('verify.show');
 
 require __DIR__.'/auth.php';
