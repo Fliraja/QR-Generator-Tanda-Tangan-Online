@@ -16,6 +16,9 @@
                         {{ __('Generate QR') }}
                     </x-nav-link>
                     @if (Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Admin') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('signers.index')" :active="request()->routeIs('signers.*')">
                             {{ __('Penandatangan') }}
                         </x-nav-link>
@@ -82,6 +85,9 @@
                 {{ __('Generate QR') }}
             </x-responsive-nav-link>
             @if (Auth::user()->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                    {{ __('Admin') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('signers.index')" :active="request()->routeIs('signers.*')">
                     {{ __('Penandatangan') }}
                 </x-responsive-nav-link>

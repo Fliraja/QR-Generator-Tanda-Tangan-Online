@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\QrGenerationController;
 use App\Http\Controllers\SignerController;
@@ -17,6 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::middleware('admin')->prefix('admin')->group(function () {
+        Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
         Route::resource('users', UserManagementController::class)->except(['show']);
         Route::patch('/users/{user}/toggle', [UserManagementController::class, 'toggle'])->name('users.toggle');
         Route::resource('signers', SignerController::class)->except(['show']);

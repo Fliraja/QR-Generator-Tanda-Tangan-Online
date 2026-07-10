@@ -161,6 +161,38 @@ class AdminTest extends TestCase
         $this->assertDatabaseHas('users', ['id' => $this->admin->id, 'role' => 'admin']);
     }
 
+    // --- Admin Dashboard ---
+
+    public function test_admin_can_view_dashboard()
+    {
+        Signer::factory()->count(2)->create(['is_active' => true]);
+        $this->actingAs($this->admin)
+            ->get('/admin')
+            ->assertOk()
+            ->assertSee('Dashboard Admin')
+            ->assertSee('Penandatangan Aktif');
+    }
+
+    public function test_staff_cannot_view_dashboard()
+    {
+        $this->actingAs($this->staff)
+            ->get('/admin')
+            ->assertForbidden();
+    }
+
+    public function test_dashboard_shows_correct_counts()
+    {
+        Signer::factory()->count(2)->create(['is_active' => true]);
+        Signer::factory()->create(['is_active' => false]);
+
+        $response = $this->actingAs($this->admin)->get('/admin');
+
+        $response->assertOk();
+        $response->assertViewHas('stats', function ($stats) {
+            return $stats['active_signers'] === 2 && $stats['inactive_signers'] === 1;
+        });
+    }
+
     // --- Audit Log ---
 
     public function test_admin_can_view_logs()
