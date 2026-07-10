@@ -21,7 +21,8 @@ class QrGenerationController extends Controller
     {
         $validated = $request->validate([
             'signer_id' => 'required|exists:signers,id,is_active,1',
-            'letter_number' => 'nullable|string|max:100',
+            'letter_number' => 'required|string|max:100',
+            'perihal' => 'required|string|max:255',
         ]);
 
         $uuid = Str::uuid();
@@ -29,7 +30,8 @@ class QrGenerationController extends Controller
         QrGeneration::create([
             'uuid' => $uuid,
             'signer_id' => $validated['signer_id'],
-            'letter_number' => $validated['letter_number'] ?? null,
+            'letter_number' => $validated['letter_number'],
+            'perihal' => $validated['perihal'],
             'generated_by' => auth()->id(),
             'ip_address' => $request->ip(),
         ]);

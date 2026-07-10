@@ -32,8 +32,14 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="letter_number" class="block text-sm font-medium text-gray-700">Nomor Surat (opsional)</label>
-                            <input type="text" name="letter_number" id="letter_number" value="{{ old('letter_number') }}" placeholder="Contoh: 001/RS/VII/2026"
+                            <label for="letter_number" class="block text-sm font-medium text-gray-700">Nomor Surat <span class="text-red-600">*</span></label>
+                            <input type="text" name="letter_number" id="letter_number" value="{{ old('letter_number') }}" placeholder="Contoh: 001/RS/VII/2026" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="perihal" class="block text-sm font-medium text-gray-700">Perihal <span class="text-red-600">*</span></label>
+                            <input type="text" name="perihal" id="perihal" value="{{ old('perihal') }}" placeholder="Contoh: Persetujuan Cuti Tahunan" required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                         </div>
 

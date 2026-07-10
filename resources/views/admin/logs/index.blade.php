@@ -38,6 +38,7 @@
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Waktu</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Signer</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nomor Surat</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Perihal</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Digenerate Oleh</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">IP</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">UUID</th>
@@ -49,6 +50,7 @@
                                             <td class="px-4 py-3">{{ $log->created_at->translatedFormat('d M Y, H:i') }}</td>
                                             <td class="px-4 py-3">{{ $log->signer->name }}</td>
                                             <td class="px-4 py-3">{{ $log->letter_number ?? '-' }}</td>
+                                            <td class="px-4 py-3">{{ $log->perihal ?? '-' }}</td>
                                             <td class="px-4 py-3">{{ $log->generator->name }} ({{ $log->generator->nip }})</td>
                                             <td class="px-4 py-3 font-mono">{{ $log->ip_address }}</td>
                                             <td class="px-4 py-3 font-mono text-xs">{{ $log->uuid }}</td>

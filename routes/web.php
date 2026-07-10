@@ -8,10 +8,6 @@ use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/', [QrGenerationController::class, 'create'])->name('qr.create');
     Route::post('/qr/generate', [QrGenerationController::class, 'store'])->name('qr.generate');

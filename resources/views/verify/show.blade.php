@@ -9,6 +9,9 @@
             @if ($generation->letter_number)
                 <p><strong>Nomor Surat:</strong> {{ $generation->letter_number }}</p>
             @endif
+            @if ($generation->perihal)
+                <p><strong>Perihal:</strong> {{ $generation->perihal }}</p>
+            @endif
             <p><strong>Waktu Generate:</strong> {{ $generation->created_at->translatedFormat('d F Y, H:i') }} WIB</p>
         </div>
 
