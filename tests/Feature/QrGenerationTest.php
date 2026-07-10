@@ -40,6 +40,8 @@ class QrGenerationTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->post('/qr/generate', [
             'signer_id' => $this->signer->id,
+            'letter_number' => '001/RS/VII/2026',
+            'perihal' => 'Persetujuan Cuti Tahunan',
         ]);
 
         $response->assertOk();
@@ -49,21 +51,50 @@ class QrGenerationTest extends TestCase
         $this->assertDatabaseHas('qr_generations', [
             'signer_id' => $this->signer->id,
             'generated_by' => $this->admin->id,
+            'letter_number' => '001/RS/VII/2026',
+            'perihal' => 'Persetujuan Cuti Tahunan',
         ]);
     }
 
     public function test_store_requires_signer()
     {
         $this->actingAs($this->admin)
-            ->post('/qr/generate', [])
+            ->post('/qr/generate', [
+                'letter_number' => '001/RS/VII/2026',
+                'perihal' => 'Persetujuan Cuti Tahunan',
+            ])
             ->assertSessionHasErrors('signer_id');
+    }
+
+    public function test_store_requires_letter_number()
+    {
+        $this->actingAs($this->admin)
+            ->post('/qr/generate', [
+                'signer_id' => $this->signer->id,
+                'perihal' => 'Persetujuan Cuti Tahunan',
+            ])
+            ->assertSessionHasErrors('letter_number');
+    }
+
+    public function test_store_requires_perihal()
+    {
+        $this->actingAs($this->admin)
+            ->post('/qr/generate', [
+                'signer_id' => $this->signer->id,
+                'letter_number' => '001/RS/VII/2026',
+            ])
+            ->assertSessionHasErrors('perihal');
     }
 
     public function test_store_rejects_inactive_signer()
     {
         $inactive = Signer::factory()->create(['is_active' => false]);
         $this->actingAs($this->admin)
-            ->post('/qr/generate', ['signer_id' => $inactive->id])
+            ->post('/qr/generate', [
+                'signer_id' => $inactive->id,
+                'letter_number' => '001/RS/VII/2026',
+                'perihal' => 'Persetujuan Cuti Tahunan',
+            ])
             ->assertSessionHasErrors('signer_id');
     }
 
@@ -72,6 +103,7 @@ class QrGenerationTest extends TestCase
         $this->actingAs($this->admin)->post('/qr/generate', [
             'signer_id' => $this->signer->id,
             'letter_number' => '001/RS/VII/2026',
+            'perihal' => 'Persetujuan Cuti Tahunan',
         ]);
 
         $this->assertDatabaseHas('qr_generations', [
@@ -80,10 +112,27 @@ class QrGenerationTest extends TestCase
         ]);
     }
 
+    public function test_store_saves_perihal()
+    {
+        $this->actingAs($this->admin)->post('/qr/generate', [
+            'signer_id' => $this->signer->id,
+            'letter_number' => '001/RS/VII/2026',
+            'perihal' => 'Persetujuan Cuti Tahunan',
+        ]);
+
+        $this->assertDatabaseHas('qr_generations', [
+            'signer_id' => $this->signer->id,
+            'perihal' => 'Persetujuan Cuti Tahunan',
+        ]);
+    }
+
     public function test_store_without_auth_redirects()
     {
-        $this->post('/qr/generate', ['signer_id' => $this->signer->id])
-            ->assertRedirect('/login');
+        $this->post('/qr/generate', [
+            'signer_id' => $this->signer->id,
+            'letter_number' => '001/RS/VII/2026',
+            'perihal' => 'Persetujuan Cuti Tahunan',
+        ])->assertRedirect('/login');
     }
 
     public function test_multiple_generations_have_unique_uuids()
@@ -92,6 +141,8 @@ class QrGenerationTest extends TestCase
         for ($i = 0; $i < 3; $i++) {
             $response = $this->actingAs($this->admin)->post('/qr/generate', [
                 'signer_id' => $this->signer->id,
+                'letter_number' => '00' . $i . '/RS/VII/2026',
+                'perihal' => 'Persetujuan Cuti Tahunan',
             ]);
             $response->assertOk();
         }
