@@ -1,47 +1,64 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" class="space-y-5">
         @csrf
 
-        <!-- NIP -->
+        <div class="space-y-1.5">
+            <label for="nip" class="text-sm font-medium text-slate-300">NIP</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i data-lucide="user" class="w-5 h-5 text-slate-500"></i>
+                </div>
+                <input type="text" id="nip" name="nip" value="{{ old('nip') }}" required autofocus
+                    autocomplete="username" placeholder="Masukkan NIP"
+                    class="w-full pl-11 pr-4 py-3 bg-slate-800/80 border border-slate-600 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all @error('nip') border-red-500 @enderror">
+            </div>
+            @error('nip')
+                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+                <label for="password" class="text-sm font-medium text-slate-300">Kata Sandi</label>
+                {{-- @if (Route::has('password.request'))
+                    <a href="{{ route('password.request') }}"
+                        class="text-xs font-medium text-brand-400 hover:text-brand-300 transition-colors">Lupa
+                        sandi?</a>
+                @endif --}}
+            </div>
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i data-lucide="lock" class="w-5 h-5 text-slate-500"></i>
+                </div>
+                <input :type="showPassword ? 'text' : 'password'" id="password" name="password" required
+                    placeholder="••••••••"
+                    class="w-full pl-11 pr-12 py-3 bg-slate-800/80 border border-slate-600 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all @error('password') border-red-500 @enderror">
+                <button type="button" @click="togglePassword()"
+                    class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-white transition-colors">
+                    <i :data-lucide="showPassword ? 'eye-off' : 'eye'" id="eyeIcon" class="w-5 h-5"></i>
+                </button>
+            </div>
+            @error('password')
+                <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
         <div>
-            <x-input-label for="nip" :value="__('NIP')" />
-            <x-text-input id="nip" class="block mt-1 w-full" type="text" name="nip" :value="old('nip')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('nip')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+            <button type="submit"
+                class="w-full flex justify-center items-center gap-2 py-3.5 px-4 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-brand-500 transition-all transform hover:scale-[1.01] active:scale-[0.99]">
+                Masuk ke Dashboard
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
         </div>
     </form>
+
+    {{-- @if (Route::has('register'))
+        <div class="mt-8 text-center">
+            <p class="text-sm text-slate-400">
+                Belum memiliki akun?
+                <a href="{{ route('register') }}"
+                    class="font-semibold text-brand-400 hover:text-brand-300 transition-colors">Daftar sekarang</a>
+            </p>
+        </div>
+    @endif --}}
 </x-guest-layout>

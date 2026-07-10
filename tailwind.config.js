@@ -12,7 +12,24 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                brand: {
+                    400: '#38bdf8',
+                    500: '#0ea5e9',
+                    600: '#0284c7',
+                },
+            },
+            animation: {
+                scan: 'scan 3s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+                'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+                scan: {
+                    '0%, 100%': { transform: 'translateY(-10px)' },
+                    '50%': { transform: 'translateY(160px)' },
+                },
             },
         },
     },
