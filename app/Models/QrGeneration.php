@@ -9,7 +9,7 @@ class QrGeneration extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['uuid', 'signer_id', 'letter_number', 'generated_by', 'ip_address'];
+    protected $fillable = ['uuid', 'signer_id', 'letter_number', 'perihal', 'generated_by', 'ip_address'];
 
     public function signer()
     {
