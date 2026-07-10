@@ -46,12 +46,22 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <a href="{{ route('users.edit', $user) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                                        @if ($user->is_active)
-                                            <form method="POST" action="{{ route('users.destroy', $user) }}" class="inline" onsubmit="return confirm('Nonaktifkan akun ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-900">Nonaktifkan</button>
-                                            </form>
+                                        @if ($user->id !== auth()->id())
+                                            @if ($user->is_active)
+                                                <form method="POST" action="{{ route('users.destroy', $user) }}" class="inline" onsubmit="return confirm('Nonaktifkan akun ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-600 hover:text-red-900">Nonaktifkan</button>
+                                                </form>
+                                            @else
+                                                <form method="POST" action="{{ route('users.toggle', $user) }}" class="inline" onsubmit="return confirm('Aktifkan kembali akun ini?')">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="text-green-600 hover:text-green-900">Aktifkan</button>
+                                                </form>
+                                            @endif
+                                        @else
+                                            <span class="text-gray-400 text-xs italic">Akun Anda</span>
                                         @endif
                                     </td>
                                 </tr>

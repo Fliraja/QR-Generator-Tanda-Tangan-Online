@@ -15,6 +15,20 @@
                     <x-nav-link :href="route('qr.create')" :active="request()->routeIs('qr.create')">
                         {{ __('Generate QR') }}
                     </x-nav-link>
+                    @if (Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Admin') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('signers.index')" :active="request()->routeIs('signers.*')">
+                            {{ __('Penandatangan') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                            {{ __('Akun Staf') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('logs.index')" :active="request()->routeIs('logs.index')">
+                            {{ __('Log Audit') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -70,6 +84,20 @@
             <x-responsive-nav-link :href="route('qr.create')" :active="request()->routeIs('qr.create')">
                 {{ __('Generate QR') }}
             </x-responsive-nav-link>
+            @if (Auth::user()->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                    {{ __('Admin') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('signers.index')" :active="request()->routeIs('signers.*')">
+                    {{ __('Penandatangan') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                    {{ __('Akun Staf') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('logs.index')" :active="request()->routeIs('logs.index')">
+                    {{ __('Log Audit') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
