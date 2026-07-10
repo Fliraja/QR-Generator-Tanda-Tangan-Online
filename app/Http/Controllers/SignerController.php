@@ -48,4 +48,11 @@ class SignerController extends Controller
         $signer->update(['is_active' => false]);
         return redirect()->route('signers.index')->with('success', 'Signer dinonaktifkan.');
     }
+
+    public function toggle(Signer $signer)
+    {
+        $signer->update(['is_active' => ! $signer->is_active]);
+        $status = $signer->is_active ? 'diaktifkan' : 'dinonaktifkan';
+        return redirect()->route('signers.index')->with('success', "Signer {$status}.");
+    }
 }

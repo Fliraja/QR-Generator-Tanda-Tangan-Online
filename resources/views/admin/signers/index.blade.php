@@ -50,6 +50,12 @@
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-600 hover:text-red-900">Nonaktifkan</button>
                                             </form>
+                                        @else
+                                            <form method="POST" action="{{ route('signers.toggle', $signer) }}" class="inline" onsubmit="return confirm('Aktifkan kembali penandatangan ini?')">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="text-green-600 hover:text-green-900">Aktifkan</button>
+                                            </form>
                                         @endif
                                     </td>
                                 </tr>

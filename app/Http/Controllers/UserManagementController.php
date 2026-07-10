@@ -42,14 +42,41 @@ class UserManagementController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'role' => 'required|in:staff,admin',
+            'password' => 'nullable|string|min:8',
         ]);
+
+        if ($user->id === auth()->id() && $validated['role'] !== 'admin') {
+            return back()->withErrors(['role' => 'Tidak bisa mengubah role akun sendiri.'])->withInput();
+        }
+
+        if (! empty($validated['password'])) {
+            $validated['password'] = Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
+
         $user->update($validated);
         return redirect()->route('users.index')->with('success', 'Data akun diperbarui.');
     }
 
     public function destroy(User $user)
     {
+        if ($user->id === auth()->id()) {
+            return back()->withErrors(['user' => 'Tidak bisa menonaktifkan akun sendiri.']);
+        }
+
         $user->update(['is_active' => false]);
         return redirect()->route('users.index')->with('success', 'Akun dinonaktifkan.');
+    }
+
+    public function toggle(User $user)
+    {
+        if ($user->id === auth()->id()) {
+            return back()->withErrors(['user' => 'Tidak bisa mengubah status akun sendiri.']);
+        }
+
+        $user->update(['is_active' => ! $user->is_active]);
+        $status = $user->is_active ? 'diaktifkan' : 'dinonaktifkan';
+        return redirect()->route('users.index')->with('success', "Akun {$status}.");
     }
 }

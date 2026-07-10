@@ -18,7 +18,9 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::resource('users', UserManagementController::class)->except(['show']);
+        Route::patch('/users/{user}/toggle', [UserManagementController::class, 'toggle'])->name('users.toggle');
         Route::resource('signers', SignerController::class)->except(['show']);
+        Route::patch('/signers/{signer}/toggle', [SignerController::class, 'toggle'])->name('signers.toggle');
         Route::get('/logs', [AuditLogController::class, 'index'])->name('logs.index');
     });
 });
