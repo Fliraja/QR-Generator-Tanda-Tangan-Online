@@ -3,16 +3,16 @@
         @csrf
 
         <div class="space-y-1.5">
-            <label for="nip" class="text-sm font-medium text-slate-300">NIP</label>
+            <label for="login" class="text-sm font-medium text-slate-300">NIP / Nama</label>
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <i data-lucide="user" class="w-5 h-5 text-slate-500"></i>
                 </div>
-                <input type="text" id="nip" name="nip" value="{{ old('nip') }}" required autofocus
-                    autocomplete="username" placeholder="Masukkan NIP"
-                    class="w-full pl-11 pr-4 py-3 bg-slate-800/80 border border-slate-600 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all @error('nip') border-red-500 @enderror">
+                <input type="text" id="login" name="login" value="{{ old('login') }}" required autofocus
+                    autocomplete="username" placeholder="Masukkan NIP atau Nama"
+                    class="w-full pl-11 pr-4 py-3 bg-slate-800/80 border border-slate-600 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all @error('login') border-red-500 @enderror">
             </div>
-            @error('nip')
+            @error('login')
                 <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
             @enderror
         </div>

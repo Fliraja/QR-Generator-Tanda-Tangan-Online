@@ -22,7 +22,20 @@ class AuthenticationTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->post('/login', [
-            'nip' => $user->nip,
+            'login' => $user->nip,
+            'password' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+        $response->assertRedirect(route('qr.create', absolute: false));
+    }
+
+    public function test_users_can_authenticate_using_name_on_the_login_screen(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->post('/login', [
+            'login' => $user->name,
             'password' => 'password',
         ]);
 
@@ -35,7 +48,7 @@ class AuthenticationTest extends TestCase
         $user = User::factory()->create();
 
         $this->post('/login', [
-            'nip' => $user->nip,
+            'login' => $user->nip,
             'password' => 'wrong-password',
         ]);
 

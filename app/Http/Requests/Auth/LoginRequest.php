@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -28,7 +29,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nip' => ['required', 'string'],
+            'login' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -42,18 +43,22 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('nip', 'password'), $this->boolean('remember'))) {
+        $login = $this->string('login');
+
+        $user = User::where('nip', $login)->orWhere('name', $login)->first();
+
+        if (! $user || ! Auth::attempt(['nip' => $user->nip, 'password' => $this->string('password')], $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'nip' => trans('auth.failed'),
+                'login' => trans('auth.failed'),
             ]);
         }
 
         if (! auth()->user()->is_active) {
             Auth::logout();
             throw ValidationException::withMessages([
-                'nip' => 'Akun ini sudah dinonaktifkan.',
+                'login' => 'Akun ini sudah dinonaktifkan.',
             ]);
         }
 
@@ -88,6 +93,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('nip')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('login')).'|'.$this->ip());
     }
 }
