@@ -47,8 +47,8 @@
                     <h1 class="text-3xl font-bold leading-snug text-white mb-4">Tanda Tangan Elektronik<br>Generator
                     </h1>
                     <p class="text-slate-400 text-sm leading-relaxed max-w-md">
-                        Platform generator tanda tangan digital berbasis QR Code pertama yang menggunakan enkripsi
-                        tingkat militer untuk memastikan keaslian setiap dokumen Anda.
+                        Sistem generator tanda tangan digital berbasis QR Code internal dengan enkripsi tingkat lanjut
+                        untuk menjamin keaslian dan kerahasiaan setiap dokumen medis Anda.
                     </p>
                 </div>
 
@@ -82,7 +82,7 @@
                     <div class="text-center lg:text-left mb-8">
                         <div class="flex justify-center lg:hidden items-center gap-2 text-brand-400 mb-6">
                             <img src="{{ asset('icon.jpeg') }}" alt="Logo" class="w-8 h-8 rounded" />
-                            <span class="text-2xl font-bold tracking-wide text-white">QRSig.net</span>
+                            <span class="text-2xl font-bold tracking-wide text-white">RSU Nirwana</span>
                         </div>
                         <h2 class="text-2xl lg:text-3xl font-bold text-white mb-2">Selamat Datang!</h2>
                         <p class="text-slate-400 text-sm">Masuk ke dashboard untuk mengelola tanda tangan Anda.</p>
