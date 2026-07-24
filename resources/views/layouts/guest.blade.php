@@ -41,7 +41,7 @@
                 class="hidden lg:flex lg:w-1/2 flex-col justify-between p-12 relative bg-gradient-to-br from-slate-900 to-slate-950 border-r border-slate-700/50">
                 <div>
                     <div class="flex items-center gap-3 text-brand-400 mb-6">
-                        <img src="{{ asset('icon.jpeg') }}" alt="Logo" class="w-8 h-8 rounded" />
+                        <img src="{{ asset('icon.png') }}" alt="Logo" class="w-8 h-8 rounded" />
                         <span class="text-xl font-bold tracking-wide text-white">TTE RSU Nirwana</span>
                     </div>
                     <h1 class="text-3xl font-bold leading-snug text-white mb-4">Tanda Tangan Elektronik<br>Generator
@@ -81,7 +81,7 @@
                 <div class="w-full max-w-md" x-data="loginForm()">
                     <div class="text-center lg:text-left mb-8">
                         <div class="flex justify-center lg:hidden items-center gap-2 text-brand-400 mb-6">
-                            <img src="{{ asset('icon.jpeg') }}" alt="Logo" class="w-8 h-8 rounded" />
+                            <img src="{{ asset('icon.png') }}" alt="Logo" class="w-8 h-8 rounded" />
                             <span class="text-2xl font-bold tracking-wide text-white">RSU Nirwana</span>
                         </div>
                         <h2 class="text-2xl lg:text-3xl font-bold text-white mb-2">Selamat Datang!</h2>
