@@ -8,6 +8,7 @@ use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\Color\Color;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -41,6 +42,8 @@ class QrGenerationController extends Controller
         $qrCode = new QrCode(
             data: url('/verify/' . $uuid),
             errorCorrectionLevel: ErrorCorrectionLevel::High,
+            margin: 40,
+            backgroundColor: new Color(255, 255, 255),
         );
 
         $logo = new Logo(
