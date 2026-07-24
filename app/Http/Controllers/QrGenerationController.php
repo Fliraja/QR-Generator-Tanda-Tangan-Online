@@ -46,6 +46,7 @@ class QrGenerationController extends Controller
         $logo = new Logo(
             path: public_path('icon.png'),
             resizeToWidth: 60,
+            punchoutBackground: true,
         );
 
         $writer = new PngWriter();
