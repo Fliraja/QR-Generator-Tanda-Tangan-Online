@@ -42,13 +42,12 @@ class QrGenerationController extends Controller
         $qrCode = new QrCode(
             data: url('/verify/' . $uuid),
             errorCorrectionLevel: ErrorCorrectionLevel::High,
-            margin: 40,
             backgroundColor: new Color(255, 255, 255),
         );
 
         $logo = new Logo(
-            path: public_path('icon.png'),
-            resizeToWidth: 60,
+            path: public_path('qr-logo.png'),
+            resizeToWidth: 70,
             punchoutBackground: true,
         );
 
