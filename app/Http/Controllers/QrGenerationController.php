@@ -6,6 +6,8 @@ use App\Models\Signer;
 use App\Models\QrGeneration;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\Logo\Logo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -36,9 +38,18 @@ class QrGenerationController extends Controller
             'ip_address' => $request->ip(),
         ]);
 
-        $qrCode = new QrCode(url('/verify/' . $uuid));
+        $qrCode = new QrCode(
+            data: url('/verify/' . $uuid),
+            errorCorrectionLevel: ErrorCorrectionLevel::High,
+        );
+
+        $logo = new Logo(
+            path: public_path('icon.jpeg'),
+            resizeToWidth: 60,
+        );
+
         $writer = new PngWriter();
-        $result = $writer->write($qrCode);
+        $result = $writer->write($qrCode, $logo);
 
         return response($result->getString(), 200, [
             'Content-Type' => 'image/png',
