@@ -44,7 +44,7 @@ class QrGenerationController extends Controller
         );
 
         $logo = new Logo(
-            path: public_path('icon.jpeg'),
+            path: public_path('icon.png'),
             resizeToWidth: 60,
         );
 
