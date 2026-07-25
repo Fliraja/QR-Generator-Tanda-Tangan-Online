@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Signer;
 use App\Models\QrGeneration;
-use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Writer\PngWriter;
-use Endroid\QrCode\ErrorCorrectionLevel;
-use Endroid\QrCode\Logo\Logo;
-use Endroid\QrCode\Color\Color;
+use App\Services\QrCodeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class QrGenerationController extends Controller
 {
+    public function __construct(private QrCodeService $qrCodeService)
+    {
+    }
+
     public function create()
     {
         $signers = Signer::where('is_active', true)->orderBy('name')->get();
@@ -39,22 +39,9 @@ class QrGenerationController extends Controller
             'ip_address' => $request->ip(),
         ]);
 
-        $qrCode = new QrCode(
-            data: url('/verify/' . $uuid),
-            errorCorrectionLevel: ErrorCorrectionLevel::High,
-            backgroundColor: new Color(255, 255, 255),
-        );
+        $pngData = $this->qrCodeService->generate(url('/verify/' . $uuid));
 
-        $logo = new Logo(
-            path: public_path('qr-logo.png'),
-            resizeToWidth: 70,
-            punchoutBackground: true,
-        );
-
-        $writer = new PngWriter();
-        $result = $writer->write($qrCode, $logo);
-
-        return response($result->getString(), 200, [
+        return response($pngData, 200, [
             'Content-Type' => 'image/png',
             'Content-Disposition' => 'attachment; filename="qr-ttd-' . $uuid . '.png"',
         ]);
